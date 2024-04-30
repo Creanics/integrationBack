@@ -1,0 +1,27 @@
+name: SonarQube Analysis
+
+on:
+  push:
+    branches:
+      - main
+      - master
+
+jobs:
+  sonarqube:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up JDK
+      uses: actions/setup-java@v2
+      with:
+        java-version: '11'
+
+    - name: SonarQube Scan
+      run: |
+        ./gradlew sonarqube \
+          -Dsonar.projectKey=BACK_PROJECT_KEY \
+          -Dsonar.host.url=BACK_SONARQUBE_URL \
+          -Dsonar.login=BACK_SONARQUBE_TOKEN
